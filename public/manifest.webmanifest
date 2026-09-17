@@ -1,0 +1,19 @@
+{
+  "name": "AMK Bouquets — Maison de Bouquets en Satin de Luxe",
+  "short_name": "AMK Bouquets",
+  "description": "Atelier d'artisanat floral de bouquets en ruban de satin haut de gamme à Daloa, Côte d'Ivoire. Créations éternelles et sur-mesure.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FCF9F4",
+  "theme_color": "#1A1614",
+  "orientation": "portrait-primary",
+  "lang": "fr-FR",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

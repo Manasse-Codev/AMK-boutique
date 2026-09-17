@@ -1,0 +1,9 @@
+# Robots.txt pour AMK Bouquets - Atelier Floral Daloa, Côte d'Ivoire
+# https://amk-bouquets.ci
+
+User-agent: *
+Allow: /
+Disallow: /panier
+
+# Emplacement du Sitemap XML officiel pour Googlebot
+Sitemap: https://amk-bouquets.ci/sitemap.xml
