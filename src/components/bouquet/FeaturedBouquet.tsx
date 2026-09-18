@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { FEATURED_BOUQUET } from '../../data/bouquets';
 import { useCart } from '../../hooks/useCart';
 import { formatPrice } from '../../services/whatsappService';
 
 export const FeaturedBouquet: React.FC = () => {
   const { addToCart } = useCart();
+  const [isAdded, setIsAdded] = useState(false);
   const bouquet = FEATURED_BOUQUET;
 
   const handleAddToCart = () => {
@@ -18,6 +19,10 @@ export const FeaturedBouquet: React.FC = () => {
       colorName: 'Cramoisi Rubis & Ivoire Champagne',
       selectedOptions: bouquet.availableOptions,
     });
+    setIsAdded(true);
+    setTimeout(() => {
+      setIsAdded(false);
+    }, 1800);
   };
 
   const handleWhatsAppOrder = () => {
@@ -137,9 +142,22 @@ export const FeaturedBouquet: React.FC = () => {
               
               <button
                 onClick={handleAddToCart}
-                className="border border-white/40 hover:border-white text-white text-center py-4 px-6 text-xs font-semibold tracking-[0.2em] uppercase transition duration-300"
+                className={`text-center py-4 px-6 text-xs font-semibold tracking-[0.2em] uppercase transition duration-300 flex items-center justify-center gap-2 ${
+                  isAdded
+                    ? 'bg-brand-caramel border border-brand-caramel text-white'
+                    : 'border border-white/40 hover:border-white text-white'
+                }`}
               >
-                Ajouter au panier
+                {isAdded ? (
+                  <>
+                    <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M5 13l4 4L19 7" />
+                    </svg>
+                    <span>✓ Ajouté au panier</span>
+                  </>
+                ) : (
+                  <span>Ajouter au panier</span>
+                )}
               </button>
             </div>
 

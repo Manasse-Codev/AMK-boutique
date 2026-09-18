@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { BOUQUETS_CATALOG } from '../../data/bouquets';
 import { buildDirectInquiryWhatsAppUrl, formatPrice } from '../../services/whatsappService';
@@ -6,6 +6,8 @@ import { useCart } from '../../hooks/useCart';
 
 export const CollectionsGrid: React.FC = () => {
   const { addToCart } = useCart();
+  const [addedId, setAddedId] = useState<string | null>(null);
+
   const b1 = BOUQUETS_CATALOG[0]; // Bouquet simple
   const b2 = BOUQUETS_CATALOG[1]; // Bouquet avec papillon / couronne
   const b3 = BOUQUETS_CATALOG[2]; // Bouquet avec 2 couleurs
@@ -25,6 +27,10 @@ export const CollectionsGrid: React.FC = () => {
       colorName: bouquet.availableColors[0]?.name || 'Nuance Classique',
       selectedOptions: bouquet.availableOptions,
     });
+    setAddedId(bouquet.id);
+    setTimeout(() => {
+      setAddedId((current) => (current === bouquet.id ? null : current));
+    }, 1800);
   };
 
   return (
@@ -102,12 +108,27 @@ export const CollectionsGrid: React.FC = () => {
               <button
                 type="button"
                 onClick={() => handleAddToCart(b1)}
-                className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.16em] font-semibold text-white bg-brand-espresso hover:bg-brand-caramel px-4 py-2.5 transition-colors"
+                className={`inline-flex items-center gap-2 text-xs uppercase tracking-[0.16em] font-semibold px-4 py-2.5 transition-all duration-300 ${
+                  addedId === b1.id
+                    ? 'bg-brand-caramel text-white scale-[1.02]'
+                    : 'text-white bg-brand-espresso hover:bg-brand-caramel'
+                }`}
               >
-                <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4v16m8-8H4" />
-                </svg>
-                <span>Ajouter au panier</span>
+                {addedId === b1.id ? (
+                  <>
+                    <svg className="w-3.5 h-3.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M5 13l4 4L19 7" />
+                    </svg>
+                    <span>✓ Ajouté au panier</span>
+                  </>
+                ) : (
+                  <>
+                    <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4v16m8-8H4" />
+                    </svg>
+                    <span>Ajouter au panier</span>
+                  </>
+                )}
               </button>
               <Link
                 to={`/bouquets/${b1.slug}`}
@@ -176,12 +197,27 @@ export const CollectionsGrid: React.FC = () => {
               <button
                 type="button"
                 onClick={() => handleAddToCart(b2)}
-                className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.16em] font-semibold text-white bg-brand-espresso hover:bg-brand-caramel px-4 py-2.5 transition-colors"
+                className={`inline-flex items-center gap-2 text-xs uppercase tracking-[0.16em] font-semibold px-4 py-2.5 transition-all duration-300 ${
+                  addedId === b2.id
+                    ? 'bg-brand-caramel text-white scale-[1.02]'
+                    : 'text-white bg-brand-espresso hover:bg-brand-caramel'
+                }`}
               >
-                <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4v16m8-8H4" />
-                </svg>
-                <span>Ajouter au panier</span>
+                {addedId === b2.id ? (
+                  <>
+                    <svg className="w-3.5 h-3.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M5 13l4 4L19 7" />
+                    </svg>
+                    <span>✓ Ajouté au panier</span>
+                  </>
+                ) : (
+                  <>
+                    <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4v16m8-8H4" />
+                    </svg>
+                    <span>Ajouter au panier</span>
+                  </>
+                )}
               </button>
               <Link
                 to={`/bouquets/${b2.slug}`}
@@ -231,12 +267,27 @@ export const CollectionsGrid: React.FC = () => {
               <button
                 type="button"
                 onClick={() => handleAddToCart(b3)}
-                className="inline-flex items-center gap-1.5 text-[11px] uppercase tracking-[0.14em] font-semibold text-white bg-brand-espresso hover:bg-brand-caramel px-3 py-2 transition-colors"
+                className={`inline-flex items-center gap-1.5 text-[11px] uppercase tracking-[0.14em] font-semibold px-3 py-2 transition-all duration-300 ${
+                  addedId === b3.id
+                    ? 'bg-brand-caramel text-white scale-[1.02]'
+                    : 'text-white bg-brand-espresso hover:bg-brand-caramel'
+                }`}
               >
-                <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4v16m8-8H4" />
-                </svg>
-                <span>Panier</span>
+                {addedId === b3.id ? (
+                  <>
+                    <svg className="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M5 13l4 4L19 7" />
+                    </svg>
+                    <span>✓ Ajouté</span>
+                  </>
+                ) : (
+                  <>
+                    <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4v16m8-8H4" />
+                    </svg>
+                    <span>Panier</span>
+                  </>
+                )}
               </button>
               <Link to={`/bouquets/${b3.slug}`} className="text-brand-caramel tracking-widest uppercase hover:underline">
                 Découvrir &rarr;
@@ -283,12 +334,27 @@ export const CollectionsGrid: React.FC = () => {
               <button
                 type="button"
                 onClick={() => handleAddToCart(b4)}
-                className="inline-flex items-center gap-1.5 text-[11px] uppercase tracking-[0.14em] font-semibold text-white bg-brand-espresso hover:bg-brand-caramel px-3 py-2 transition-colors"
+                className={`inline-flex items-center gap-1.5 text-[11px] uppercase tracking-[0.14em] font-semibold px-3 py-2 transition-all duration-300 ${
+                  addedId === b4.id
+                    ? 'bg-brand-caramel text-white scale-[1.02]'
+                    : 'text-white bg-brand-espresso hover:bg-brand-caramel'
+                }`}
               >
-                <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4v16m8-8H4" />
-                </svg>
-                <span>Panier</span>
+                {addedId === b4.id ? (
+                  <>
+                    <svg className="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M5 13l4 4L19 7" />
+                    </svg>
+                    <span>✓ Ajouté</span>
+                  </>
+                ) : (
+                  <>
+                    <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4v16m8-8H4" />
+                    </svg>
+                    <span>Panier</span>
+                  </>
+                )}
               </button>
               <Link to={`/bouquets/${b4.slug}`} className="text-brand-caramel tracking-widest uppercase hover:underline">
                 Découvrir &rarr;
@@ -335,12 +401,27 @@ export const CollectionsGrid: React.FC = () => {
               <button
                 type="button"
                 onClick={() => handleAddToCart(b5)}
-                className="inline-flex items-center gap-1.5 text-[11px] uppercase tracking-[0.14em] font-semibold text-white bg-brand-espresso hover:bg-brand-caramel px-3 py-2 transition-colors"
+                className={`inline-flex items-center gap-1.5 text-[11px] uppercase tracking-[0.14em] font-semibold px-3 py-2 transition-all duration-300 ${
+                  addedId === b5.id
+                    ? 'bg-brand-caramel text-white scale-[1.02]'
+                    : 'text-white bg-brand-espresso hover:bg-brand-caramel'
+                }`}
               >
-                <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4v16m8-8H4" />
-                </svg>
-                <span>Panier</span>
+                {addedId === b5.id ? (
+                  <>
+                    <svg className="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M5 13l4 4L19 7" />
+                    </svg>
+                    <span>✓ Ajouté</span>
+                  </>
+                ) : (
+                  <>
+                    <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4v16m8-8H4" />
+                    </svg>
+                    <span>Panier</span>
+                  </>
+                )}
               </button>
               <Link to={`/bouquets/${b5.slug}`} className="text-brand-caramel tracking-widest uppercase hover:underline">
                 Découvrir &rarr;
@@ -387,12 +468,27 @@ export const CollectionsGrid: React.FC = () => {
               <button
                 type="button"
                 onClick={() => handleAddToCart(b6)}
-                className="inline-flex items-center gap-1.5 text-[11px] uppercase tracking-[0.14em] font-semibold text-white bg-brand-espresso hover:bg-brand-caramel px-3 py-2 transition-colors"
+                className={`inline-flex items-center gap-1.5 text-[11px] uppercase tracking-[0.14em] font-semibold px-3 py-2 transition-all duration-300 ${
+                  addedId === b6.id
+                    ? 'bg-brand-caramel text-white scale-[1.02]'
+                    : 'text-white bg-brand-espresso hover:bg-brand-caramel'
+                }`}
               >
-                <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4v16m8-8H4" />
-                </svg>
-                <span>Panier</span>
+                {addedId === b6.id ? (
+                  <>
+                    <svg className="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M5 13l4 4L19 7" />
+                    </svg>
+                    <span>✓ Ajouté</span>
+                  </>
+                ) : (
+                  <>
+                    <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4v16m8-8H4" />
+                    </svg>
+                    <span>Panier</span>
+                  </>
+                )}
               </button>
               <Link to={`/bouquets/${b6.slug}`} className="text-brand-caramel tracking-widest uppercase hover:underline">
                 Découvrir &rarr;

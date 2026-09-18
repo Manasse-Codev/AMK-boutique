@@ -29,6 +29,7 @@ const BouquetDetailContent: React.FC<{ bouquet: Bouquet }> = ({ bouquet }) => {
   const [selectedSize, setSelectedSize] = useState(bouquet.sizes[1] || bouquet.sizes[0]);
   const [quantity, setQuantity] = useState<number>(1);
   const [customMessage, setCustomMessage] = useState<string>('');
+  const [isAdded, setIsAdded] = useState(false);
 
   const unitPrice = selectedSize.price;
   const totalPrice = unitPrice * quantity;
@@ -80,6 +81,10 @@ const BouquetDetailContent: React.FC<{ bouquet: Bouquet }> = ({ bouquet }) => {
       customRibbonText: customMessage.trim() || undefined,
       selectedOptions: bouquet.availableOptions,
     });
+    setIsAdded(true);
+    setTimeout(() => {
+      setIsAdded(false);
+    }, 1800);
   };
 
   const handleWhatsAppOrder = () => {
@@ -325,9 +330,22 @@ const BouquetDetailContent: React.FC<{ bouquet: Bouquet }> = ({ bouquet }) => {
                 
                 <button
                   onClick={handleAddToCart}
-                  className="border border-brand-espresso hover:bg-brand-espresso hover:text-white text-brand-espresso py-4 px-6 text-xs font-semibold tracking-[0.2em] uppercase transition duration-300"
+                  className={`py-4 px-6 text-xs font-semibold tracking-[0.2em] uppercase transition duration-300 flex items-center justify-center gap-2 ${
+                    isAdded
+                      ? 'bg-brand-caramel border border-brand-caramel text-white shadow-sm'
+                      : 'border border-brand-espresso hover:bg-brand-espresso hover:text-white text-brand-espresso'
+                  }`}
                 >
-                  Ajouter au panier
+                  {isAdded ? (
+                    <>
+                      <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M5 13l4 4L19 7" />
+                      </svg>
+                      <span>✓ Ajouté au panier</span>
+                    </>
+                  ) : (
+                    <span>Ajouter au panier</span>
+                  )}
                 </button>
               </div>
 

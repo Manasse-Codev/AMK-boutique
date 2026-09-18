@@ -13,6 +13,7 @@ import { usePageSEO } from '../hooks/usePageSEO';
 export const BouquetsPage: React.FC = () => {
   const { addToCart } = useCart();
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
+  const [addedId, setAddedId] = useState<string | null>(null);
 
   usePageSEO({
     title: "Catalogue Bouquets en Satin — Créations Éternelles dès 5 000 FCFA | AMK Bouquets",
@@ -44,6 +45,10 @@ export const BouquetsPage: React.FC = () => {
       colorName: bouquet.availableColors[0]?.name || 'Nuance Classique',
       selectedOptions: bouquet.availableOptions,
     });
+    setAddedId(bouquet.id);
+    setTimeout(() => {
+      setAddedId((current) => (current === bouquet.id ? null : current));
+    }, 1800);
   };
 
   return (
@@ -131,12 +136,27 @@ export const BouquetsPage: React.FC = () => {
                   <button
                     type="button"
                     onClick={() => handleAddToCart(b)}
-                    className="flex-1 inline-flex items-center justify-center gap-2 text-xs uppercase tracking-[0.16em] font-semibold text-white bg-brand-espresso hover:bg-brand-caramel py-2.5 px-3 transition-colors"
+                    className={`flex-1 inline-flex items-center justify-center gap-2 text-xs uppercase tracking-[0.16em] font-semibold py-2.5 px-3 transition-all duration-300 ${
+                      addedId === b.id
+                        ? 'bg-brand-caramel text-white scale-[1.01]'
+                        : 'text-white bg-brand-espresso hover:bg-brand-caramel'
+                    }`}
                   >
-                    <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4v16m8-8H4" />
-                    </svg>
-                    <span>Ajouter au panier</span>
+                    {addedId === b.id ? (
+                      <>
+                        <svg className="w-3.5 h-3.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M5 13l4 4L19 7" />
+                        </svg>
+                        <span>✓ Ajouté au panier</span>
+                      </>
+                    ) : (
+                      <>
+                        <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4v16m8-8H4" />
+                        </svg>
+                        <span>Ajouter au panier</span>
+                      </>
+                    )}
                   </button>
                   <a
                     href={buildDirectInquiryWhatsAppUrl(b.name)}

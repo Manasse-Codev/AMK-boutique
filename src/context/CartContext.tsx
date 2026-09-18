@@ -54,8 +54,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
       return [...prevItems, { ...newItem, id }];
     });
 
-    showToast(`« ${newItem.name} » ajouté au panier`);
-    setIsOpen(true);
+    showToast(`✓ Bouquet ajouté au panier`);
   };
 
   const removeFromCart = (index: number) => {

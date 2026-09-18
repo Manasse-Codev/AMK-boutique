@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import { useCart } from '../../hooks/useCart';
 import { buildDirectInquiryWhatsAppUrl } from '../../services/whatsappService';
 
@@ -92,8 +93,9 @@ export const Header: React.FC = () => {
             <span>Commander WhatsApp</span>
           </a>
 
-          {/* Cart Drawer Trigger Button */}
-          <button
+          {/* Cart Drawer Trigger Button with Motion badge */}
+          <motion.button
+            whileTap={{ scale: 0.96 }}
             onClick={toggleCart}
             className="relative flex items-center gap-2.5 border border-brand-espresso/80 hover:border-brand-espresso bg-transparent hover:bg-brand-sand/50 text-brand-espresso text-xs uppercase tracking-[0.18em] px-4 py-2.5 transition duration-300"
             aria-label="Ouvrir le panier"
@@ -102,10 +104,16 @@ export const Header: React.FC = () => {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
             </svg>
             <span className="hidden md:inline">Panier</span>
-            <span className="w-5 h-5 bg-brand-espresso text-brand-cream text-[10px] font-bold rounded-full flex items-center justify-center">
+            <motion.span
+              key={totalCount}
+              initial={{ scale: 1 }}
+              animate={{ scale: [1, 1.32, 1] }}
+              transition={{ type: 'spring', stiffness: 500, damping: 18 }}
+              className="w-5 h-5 bg-brand-espresso text-brand-cream text-[10px] font-bold rounded-full flex items-center justify-center"
+            >
               {totalCount}
-            </span>
-          </button>
+            </motion.span>
+          </motion.button>
 
           {/* Mobile Menu Burger Toggle */}
           <button
