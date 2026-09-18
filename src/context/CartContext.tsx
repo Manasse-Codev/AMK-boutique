@@ -42,7 +42,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const addToCart = (newItem: Omit<CartItem, 'id'>) => {
-    const id = `${newItem.bouquetId || newItem.name}-${newItem.rosesCount || ''}-${newItem.colorName || ''}-${newItem.customRibbonText || ''}`;
+    const id = `${newItem.bouquetId || newItem.name}-${newItem.rosesCount || ''}-${newItem.colorName || ''}-${(newItem.selectedOptions || []).sort().join(',')}-${newItem.customRibbonText || ''}`;
     
     setItems((prevItems) => {
       const existingIndex = prevItems.findIndex((it) => it.id === id);

@@ -78,6 +78,7 @@ const BouquetDetailContent: React.FC<{ bouquet: Bouquet }> = ({ bouquet }) => {
       rosesCount: selectedSize.roses,
       colorName: selectedColor,
       customRibbonText: customMessage.trim() || undefined,
+      selectedOptions: bouquet.availableOptions,
     });
   };
 
@@ -89,6 +90,7 @@ const BouquetDetailContent: React.FC<{ bouquet: Bouquet }> = ({ bouquet }) => {
       total: totalPrice,
       colorName: selectedColor,
       customMessage: customMessage,
+      options: bouquet.availableOptions,
     });
     window.open(url, '_blank', 'noopener,noreferrer');
   };
@@ -164,11 +166,14 @@ const BouquetDetailContent: React.FC<{ bouquet: Bouquet }> = ({ bouquet }) => {
 
               <div className="mt-5 border-y border-brand-border/80 py-4 flex items-baseline justify-between">
                 <div>
+                  <span className="text-xs uppercase tracking-widest text-brand-espresso/60 block mb-1">
+                    À partir de
+                  </span>
                   <span className="font-serif text-3xl font-bold text-brand-espresso">
                     {formatPrice(unitPrice)}
                   </span>
                   <span className="text-[11px] text-brand-espresso/60 block mt-0.5">
-                    {quantity > 1 ? `Sous-total (${quantity} bouquets) : ${formatPrice(totalPrice)}` : 'Prix de confection'}
+                    {quantity > 1 ? `Sous-total (${quantity} bouquets) : ${formatPrice(totalPrice)}` : (bouquet.priceNote || 'Prix variable selon le volume')}
                   </span>
                 </div>
                 <span className="text-xs uppercase tracking-widest text-brand-caramel font-semibold">
@@ -179,6 +184,25 @@ const BouquetDetailContent: React.FC<{ bouquet: Bouquet }> = ({ bouquet }) => {
               <p className="text-sm text-brand-charcoal/80 mt-6 leading-relaxed font-light">
                 {bouquet.detailedDescription || bouquet.description}
               </p>
+
+              {/* Available Options Badges */}
+              {bouquet.availableOptions && bouquet.availableOptions.length > 0 && (
+                <div className="mt-6">
+                  <label className="block text-xs uppercase tracking-[0.2em] font-semibold text-brand-espresso mb-2">
+                    Options disponibles pour ce bouquet :
+                  </label>
+                  <div className="flex flex-wrap gap-2">
+                    {bouquet.availableOptions.map((opt) => (
+                      <span
+                        key={opt}
+                        className="px-3 py-1 bg-brand-sand/70 border border-brand-border text-xs text-brand-espresso font-medium"
+                      >
+                        ✓ {opt}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )}
 
               {/* Color Options */}
               <div className="mt-8">
@@ -208,9 +232,16 @@ const BouquetDetailContent: React.FC<{ bouquet: Bouquet }> = ({ bouquet }) => {
 
               {/* Rose Count / Size Selection */}
               <div className="mt-6">
-                <label className="block text-xs uppercase tracking-[0.2em] font-semibold text-brand-espresso mb-3">
-                  Composition & Nombre de Roses :
-                </label>
+                <div className="flex justify-between items-baseline mb-3">
+                  <label className="block text-xs uppercase tracking-[0.2em] font-semibold text-brand-espresso">
+                    Composition & Volume (Nombre de Roses) :
+                  </label>
+                  {bouquet.priceNote && (
+                    <span className="text-[11px] text-brand-caramel italic">
+                      {bouquet.priceNote}
+                    </span>
+                  )}
+                </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   {bouquet.sizes.map((size) => (
                     <button

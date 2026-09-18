@@ -1,5 +1,5 @@
 import React from 'react';
-import { crimsonBrownImg, flatlayToolsImg, blushChampagneImg, royalBlueImg } from '../../data/bouquets';
+import { bouquetCoeurBicoloreImg, flatlayToolsImg, bouquetPelucheStitchImg, bouquetBleuPapillonsImg } from '../../data/bouquets';
 import { buildDirectInquiryWhatsAppUrl } from '../../services/whatsappService';
 
 export const GallerySection: React.FC = () => {
@@ -28,19 +28,19 @@ export const GallerySection: React.FC = () => {
         <div className="md:col-span-4 group">
           <div className="relative overflow-hidden border border-brand-border aspect-[3/4] bg-brand-sand">
             <img
-              src={crimsonBrownImg}
-              alt="Bouquet en satin cramoisi et chocolat"
+              src={bouquetCoeurBicoloreImg}
+              alt="Bouquet de roses en satin bicolore en cœur rouge rubis et ivoire"
               className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
             />
             <div className="absolute inset-0 bg-brand-espresso/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-6">
               <span className="text-white text-xs tracking-widest uppercase font-serif">
-                Crimson & Cacao Monogramme
+                Cœur Cramoisi & Ivoire
               </span>
             </div>
           </div>
           <div className="mt-3 flex justify-between text-xs tracking-wider">
-            <span className="font-serif text-brand-espresso font-medium">BOUQUET N°018</span>
-            <span className="text-brand-caramel font-bold">16 000 FCFA</span>
+            <span className="font-serif text-brand-espresso font-medium">BOUQUET BICOLORE</span>
+            <span className="text-brand-caramel font-bold">À partir de 8 000 FCFA</span>
           </div>
         </div>
 
@@ -63,14 +63,14 @@ export const GallerySection: React.FC = () => {
           <div className="group">
             <div className="relative overflow-hidden border border-brand-border aspect-square bg-brand-sand">
               <img
-                src={blushChampagneImg}
-                alt="Bouquet de roses satin rose et champagne"
+                src={bouquetPelucheStitchImg}
+                alt="Bouquet de roses satin rose et figurine peluche Stitch"
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
               />
             </div>
             <div className="mt-3 flex justify-between text-xs tracking-wider">
-              <span className="font-serif text-brand-espresso font-medium">BOUQUET N°007 • DOUCEUR</span>
-              <span className="text-brand-caramel font-bold">12 000 FCFA</span>
+              <span className="font-serif text-brand-espresso font-medium">BOUQUET NOUNOURS • TENDRESSE</span>
+              <span className="text-brand-caramel font-bold">À partir de 13 000 FCFA</span>
             </div>
           </div>
         </div>
@@ -79,19 +79,19 @@ export const GallerySection: React.FC = () => {
         <div className="md:col-span-3 group">
           <div className="relative overflow-hidden border border-brand-border aspect-[4/5] bg-brand-sand">
             <img
-              src={royalBlueImg}
-              alt="Bouquet royal bleu et or"
+              src={bouquetBleuPapillonsImg}
+              alt="Bouquet de roses satin bleu royal et papillons or"
               className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
             />
             <div className="absolute inset-0 bg-brand-espresso/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-6">
               <span className="text-white text-xs tracking-widest uppercase font-serif">
-                Bleu Impérial & Feuilles d'Or
+                Bleu Majesté & Papillons d'Or
               </span>
             </div>
           </div>
           <div className="mt-3 flex justify-between text-xs tracking-wider">
-            <span className="font-serif text-brand-espresso font-medium">BOUQUET N°024</span>
-            <span className="text-brand-caramel font-bold">15 000 FCFA</span>
+            <span className="font-serif text-brand-espresso font-medium">BOUQUET PAPILLONS D'OR</span>
+            <span className="text-brand-caramel font-bold">À partir de 6 000 FCFA</span>
           </div>
 
           {/* Editorial note box */}

@@ -71,6 +71,11 @@ export const CartPage: React.FC = () => {
                             {item.rosesCount} roses de satin {item.colorName ? `• ${item.colorName}` : ''}
                           </span>
                         )}
+                        {item.selectedOptions && item.selectedOptions.length > 0 && (
+                          <span className="text-xs text-brand-charcoal/70 block mt-0.5">
+                            Options : {item.selectedOptions.join(' • ')}
+                          </span>
+                        )}
                         {item.customRibbonText && (
                           <span className="text-xs text-brand-caramel italic block mt-0.5">
                             Ruban: « {item.customRibbonText} »

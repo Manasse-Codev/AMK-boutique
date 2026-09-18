@@ -1,5 +1,5 @@
 import React from 'react';
-import { royalBlueImg } from '../../data/bouquets';
+import { bouquetBleuPapillonsImg } from '../../data/bouquets';
 import { buildDirectInquiryWhatsAppUrl } from '../../services/whatsappService';
 
 export const HeroSection: React.FC = () => {
@@ -82,8 +82,8 @@ export const HeroSection: React.FC = () => {
           <div className="relative group cursor-pointer overflow-hidden border border-brand-border bg-brand-sand/60 p-3 shadow-2xl">
             <div className="relative overflow-hidden aspect-[4/5] bg-brand-sand">
               <img
-                src={royalBlueImg}
-                alt="Bouquet de roses en ruban de satin Bleu Royal et Or fait main à Daloa - AMK Bouquets"
+                src={bouquetBleuPapillonsImg}
+                alt="Bouquet de roses en ruban de satin Bleu Royal et Papillons d'Or fait main à Daloa - AMK Bouquets"
                 loading="eager"
                 fetchPriority="high"
                 width="800"
@@ -94,7 +94,7 @@ export const HeroSection: React.FC = () => {
                 Collection Royale
               </div>
               <div className="absolute bottom-4 right-4 bg-white/95 text-brand-espresso text-[11px] font-serif font-bold px-3 py-1.5 shadow-md">
-                Bleu Majesté • 15 000 FCFA
+                Bleu Majesté & Papillons d'Or
               </div>
             </div>
             <div className="pt-3 pb-1 flex justify-between items-center text-xs tracking-wider">

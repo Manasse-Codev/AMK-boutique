@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { royalBlueImg, crimsonBrownImg, blushChampagneImg } from '../../data/bouquets';
+import { bouquetBleuPapillonsImg, bouquetCoeurBicoloreImg, bouquetPelucheStitchImg } from '../../data/bouquets';
 import { useCart } from '../../hooks/useCart';
 import { buildConfiguredOrderWhatsAppUrl, formatPrice } from '../../services/whatsappService';
 
@@ -13,42 +13,57 @@ interface ColorPreset {
 const COLOR_PRESETS: ColorPreset[] = [
   {
     id: 'blue',
-    name: 'Bleu Majesté & Or',
-    category: 'Gamme Royale',
-    image: royalBlueImg,
+    name: 'Bleu Majesté & Papillons d\'Or',
+    category: 'Collection Royale',
+    image: bouquetBleuPapillonsImg,
   },
   {
-    id: 'crimson',
-    name: 'Cramoisi & Chocolat',
-    category: 'Gamme Passion',
-    image: crimsonBrownImg,
+    id: 'bicolore',
+    name: 'Cœur Bicolore Cramoisi & Ivoire',
+    category: 'Collection Bicolore',
+    image: bouquetCoeurBicoloreImg,
   },
   {
-    id: 'blush',
-    name: 'Rose Poudré & Champagne',
-    category: 'Gamme Douceur',
-    image: blushChampagneImg,
+    id: 'peluche',
+    name: 'Rose Poudré & Peluche Stitch',
+    category: 'Collection Tendresse',
+    image: bouquetPelucheStitchImg,
   },
 ];
 
 const ROSE_OPTIONS = [
+  { value: 7, label: '7 Roses (Format Délicat)', price: 5000 },
   { value: 12, label: '12 Roses (Doux regard)', price: 8000 },
-  { value: 20, label: '20 Roses (Élégance)', price: 15000 },
-  { value: 30, label: '30 Roses (Grand Amour)', price: 22000 },
-  { value: 50, label: '50 Roses (Prestige Royal)', price: 35000 },
+  { value: 20, label: '20 Roses (Élégance)', price: 12000 },
+  { value: 30, label: '30 Roses (Grand Amour)', price: 18000 },
+];
+
+const COMPATIBLE_OPTIONS = [
+  'Papillon',
+  'Couronne',
+  'Paillettes',
+  'Nounours',
+  'Chocolats',
 ];
 
 export const ProductConfigurator: React.FC = () => {
   const { addToCart } = useCart();
   const [selectedColor, setSelectedColor] = useState<ColorPreset>(COLOR_PRESETS[0]);
   const [customColorMode, setCustomColorMode] = useState(false);
-  const [selectedRoses, setSelectedRoses] = useState<number>(20);
+  const [selectedRoses, setSelectedRoses] = useState<number>(12);
   const [quantity, setQuantity] = useState<number>(1);
   const [customMessage, setCustomMessage] = useState<string>('');
+  const [selectedEmbellishments, setSelectedEmbellishments] = useState<string[]>(['Papillon']);
 
   const currentOption = ROSE_OPTIONS.find((opt) => opt.value === selectedRoses) || ROSE_OPTIONS[1];
   const unitPrice = currentOption.price;
   const totalPrice = unitPrice * quantity;
+
+  const toggleEmbellishment = (opt: string) => {
+    setSelectedEmbellishments((prev) =>
+      prev.includes(opt) ? prev.filter((o) => o !== opt) : [...prev, opt]
+    );
+  };
 
   const handleAddToCart = () => {
     addToCart({
@@ -59,6 +74,7 @@ export const ProductConfigurator: React.FC = () => {
       rosesCount: selectedRoses,
       colorName: customColorMode ? 'Nuance sur-mesure' : selectedColor.name,
       customRibbonText: customMessage.trim() || undefined,
+      selectedOptions: selectedEmbellishments.length > 0 ? selectedEmbellishments : undefined,
     });
   };
 
@@ -70,6 +86,7 @@ export const ProductConfigurator: React.FC = () => {
       total: totalPrice,
       colorName: customColorMode ? 'Nuance libre sur-mesure' : selectedColor.name,
       customMessage: customMessage,
+      options: selectedEmbellishments,
     });
     window.open(url, '_blank', 'noopener,noreferrer');
   };
@@ -96,7 +113,7 @@ export const ProductConfigurator: React.FC = () => {
               className="w-full h-full object-cover transition-opacity duration-500"
             />
             <div className="absolute top-4 left-4 bg-brand-espresso text-white text-[10px] tracking-widest uppercase px-3 py-1">
-              Visualisation en direct
+              Photographie d'Atelier Réelle
             </div>
             <div className="absolute bottom-4 left-4 bg-white/95 text-brand-espresso text-xs font-serif px-3 py-1.5 shadow-sm">
               {selectedColor.name} • {selectedRoses} roses
@@ -145,11 +162,14 @@ export const ProductConfigurator: React.FC = () => {
                 </h3>
               </div>
               <div className="text-right">
+                <span className="text-[10px] uppercase text-brand-espresso/60 block mb-0.5">
+                  À partir de
+                </span>
                 <span id="selectedProductPrice" className="font-serif text-2xl md:text-3xl font-bold text-brand-espresso">
                   {formatPrice(unitPrice)}
                 </span>
                 <span className="text-[10px] uppercase text-brand-espresso/60 block">
-                  {quantity > 1 ? `Total: ${formatPrice(totalPrice)}` : 'Prix de base'}
+                  {quantity > 1 ? `Total: ${formatPrice(totalPrice)}` : 'Prix variable selon le volume'}
                 </span>
               </div>
             </div>
@@ -164,7 +184,7 @@ export const ProductConfigurator: React.FC = () => {
               {/* Color Palette Selector */}
               <div>
                 <label className="block text-xs uppercase tracking-[0.2em] font-semibold text-brand-espresso mb-3">
-                  Couleur principale des roses :
+                  Nuance & Palette de satin :
                 </label>
                 <div className="flex flex-wrap gap-3">
                   {COLOR_PRESETS.map((preset) => {
@@ -202,11 +222,11 @@ export const ProductConfigurator: React.FC = () => {
                 </div>
               </div>
 
-              {/* Number of Roses / Size */}
+              {/* Number of Roses / Volume */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-xs uppercase tracking-[0.2em] font-semibold text-brand-espresso mb-2">
-                    Nombre de roses :
+                    Volume (Nombre de roses) :
                   </label>
                   <select
                     id="roseCountSelect"
@@ -216,7 +236,7 @@ export const ProductConfigurator: React.FC = () => {
                   >
                     {ROSE_OPTIONS.map((opt) => (
                       <option key={opt.value} value={opt.value}>
-                        {opt.label} - {formatPrice(opt.price)}
+                        {opt.label} - À partir de {formatPrice(opt.price)}
                       </option>
                     ))}
                   </select>
@@ -251,6 +271,37 @@ export const ProductConfigurator: React.FC = () => {
                       +
                     </button>
                   </div>
+                </div>
+              </div>
+
+              {/* Options Additionnelles (Papillon, Couronne, Paillettes, Nounours, Chocolats) */}
+              <div>
+                <label className="block text-xs uppercase tracking-[0.2em] font-semibold text-brand-espresso mb-2">
+                  Options & Finitions d'Atelier :
+                </label>
+                <div className="flex flex-wrap gap-2.5">
+                  {COMPATIBLE_OPTIONS.map((opt) => {
+                    const isChecked = selectedEmbellishments.includes(opt);
+                    return (
+                      <button
+                        key={opt}
+                        type="button"
+                        onClick={() => toggleEmbellishment(opt)}
+                        className={`px-3.5 py-2 text-xs transition-all flex items-center gap-2 ${
+                          isChecked
+                            ? 'bg-brand-espresso text-white border border-brand-caramel font-semibold shadow-sm'
+                            : 'bg-white text-brand-espresso border border-brand-border hover:border-brand-espresso'
+                        }`}
+                      >
+                        <span className={`w-3.5 h-3.5 border flex items-center justify-center text-[10px] ${
+                          isChecked ? 'bg-brand-caramel border-brand-caramel text-white' : 'border-brand-border'
+                        }`}>
+                          {isChecked ? '✓' : ''}
+                        </span>
+                        <span>{opt}</span>
+                      </button>
+                    );
+                  })}
                 </div>
               </div>
 

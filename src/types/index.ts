@@ -20,12 +20,14 @@ export interface Bouquet {
   collectionName: string;
   startingPrice: number;
   basePrice: number;
+  priceNote?: string;
   image: string;
   images: string[];
   category: 'signature' | 'sur-mesure' | 'cadeaux' | 'peluches' | 'romantique';
   badge?: string;
   description: string;
   detailedDescription?: string;
+  availableOptions?: string[];
   specifications?: {
     composition: string;
     finitions: string;
@@ -48,6 +50,7 @@ export interface CartItem {
   rosesCount?: number;
   colorName?: string;
   customRibbonText?: string;
+  selectedOptions?: string[];
 }
 
 export interface CustomOrderRequest {

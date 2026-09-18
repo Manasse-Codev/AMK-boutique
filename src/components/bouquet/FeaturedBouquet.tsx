@@ -1,5 +1,5 @@
 import React from 'react';
-import { FEATURED_BOUQUET, crimsonBrownImg } from '../../data/bouquets';
+import { FEATURED_BOUQUET } from '../../data/bouquets';
 import { useCart } from '../../hooks/useCart';
 import { formatPrice } from '../../services/whatsappService';
 
@@ -10,12 +10,13 @@ export const FeaturedBouquet: React.FC = () => {
   const handleAddToCart = () => {
     addToCart({
       bouquetId: bouquet.id,
-      name: `${bouquet.name} (30 Roses)`,
+      name: `${bouquet.name}`,
       price: bouquet.basePrice,
       image: bouquet.image,
       quantity: 1,
       rosesCount: 30,
-      colorName: 'Cramoisi Impérial & Cacao',
+      colorName: 'Cramoisi Rubis & Ivoire Champagne',
+      selectedOptions: bouquet.availableOptions,
     });
   };
 
@@ -23,10 +24,10 @@ export const FeaturedBouquet: React.FC = () => {
     const text =
       `*COMMANDE AMK BOUQUETS*\n\n` +
       `• Modèle : ${bouquet.name}\n` +
-      `• Édition : Cramoisi Impérial & Cacao (30 roses)\n` +
-      `• Prix : ${formatPrice(bouquet.basePrice)}\n` +
+      `• Édition : Cramoisi Rubis & Ivoire Champagne (30 roses)\n` +
+      `• Prix : À partir de ${formatPrice(bouquet.basePrice)}\n` +
       `• Lieu : Daloa, Côte d'Ivoire\n\n` +
-      `Bonjour, je souhaite commander la Pièce Maîtresse « Le Somptueux » avec vous !`;
+      `Bonjour, je souhaite commander la Pièce Maîtresse « Cœur Bicolore & Satin Royal » avec vous !`;
     window.open(`https://wa.me/2250564889120?text=${encodeURIComponent(text)}`, '_blank');
   };
 
@@ -49,7 +50,7 @@ export const FeaturedBouquet: React.FC = () => {
           </div>
           <div className="text-right mt-4 md:mt-0">
             <span className="text-[11px] tracking-widest uppercase text-white/50 block">Édition Limitée</span>
-            <span className="font-serif text-2xl text-brand-gold font-bold">Cramoisi Impérial & Cacao</span>
+            <span className="font-serif text-2xl text-brand-gold font-bold">Cramoisi Rubis & Ivoire Champagne</span>
           </div>
         </div>
 
@@ -60,8 +61,8 @@ export const FeaturedBouquet: React.FC = () => {
             <div className="relative border border-white/20 bg-brand-dark p-3 shadow-2xl">
               <div className="aspect-[3/4] overflow-hidden">
                 <img
-                  src={crimsonBrownImg}
-                  alt="Bouquet de roses en satin Cramoisi Impérial et Ruban Chocolat confectionné à Daloa - AMK Bouquets"
+                  src={bouquet.image}
+                  alt="Bouquet de roses en satin Cœur Bicolore Cramoisi Rubis et Ivoire Champagne confectionné à Daloa - AMK Bouquets"
                   loading="lazy"
                   className="w-full h-full object-cover object-center hover:scale-105 transition-transform duration-700"
                 />
@@ -86,7 +87,12 @@ export const FeaturedBouquet: React.FC = () => {
                 {bouquet.subtitle}
               </p>
               <div className="mt-4 text-3xl font-serif font-bold text-brand-caramel">
-                {formatPrice(bouquet.basePrice)}
+                À partir de {formatPrice(bouquet.startingPrice)}
+                {bouquet.priceNote && (
+                  <span className="text-xs text-white/70 font-sans font-normal tracking-wider block mt-1">
+                    {bouquet.priceNote}
+                  </span>
+                )}
                 <span className="text-xs text-white/50 font-sans font-normal tracking-wider uppercase block mt-1">
                   Livraison soignée disponible à Daloa
                 </span>

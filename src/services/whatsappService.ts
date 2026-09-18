@@ -53,6 +53,7 @@ export function getOrderTextMessage(items: CartItem[], customer?: CustomerInfo):
         `🌹 *${idx + 1}. ${item.name}* (x${item.quantity})\n` +
         (item.rosesCount ? `   ▫️ Composition : ${item.rosesCount} roses de satin\n` : '') +
         (item.colorName ? `   ▫️ Nuance : ${item.colorName}\n` : '') +
+        (item.selectedOptions && item.selectedOptions.length > 0 ? `   ▫️ Options : ${item.selectedOptions.join(', ')}\n` : '') +
         (item.customRibbonText ? `   ▫️ Ruban : « *${item.customRibbonText}* »\n` : '') +
         `   ▫️ Prix : *${formatPrice(item.price * item.quantity)}*`
     )
@@ -126,19 +127,24 @@ export function buildConfiguredOrderWhatsAppUrl(params: {
   total: number;
   colorName?: string;
   customMessage?: string;
+  options?: string[];
 }): string {
   const customMsg = params.customMessage?.trim() || 'Aucun mot doux précisé';
+  const optionsText = params.options && params.options.length > 0
+    ? `• Options : ${params.options.join(', ')}\n`
+    : '';
 
   const text =
     `*COMMANDE AMK BOUQUETS*\n\n` +
     `• Modèle : ${params.name}\n` +
     (params.colorName ? `• Teinte : ${params.colorName}\n` : '') +
     `• Roses : ${params.rosesCount} roses de satin\n` +
+    optionsText +
     `• Quantité : ${params.quantity}\n` +
     `• Total estimé : ${formatPrice(params.total)}\n` +
     `• Message ruban : ${customMsg}\n` +
     `• Lieu : ${WORKSHOP_LOCATION}\n\n` +
-    `Bonjour, je souhaite valider cette commande avec vous !`;
+    `Bonjour, je souhaite commander ce bouquet configuré avec vous !`;
 
   return `https://wa.me/${WHATSAPP_PHONE}?text=${encodeURIComponent(text)}`;
 }

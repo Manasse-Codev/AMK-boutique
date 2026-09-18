@@ -22,11 +22,10 @@ export const BouquetsPage: React.FC = () => {
 
   const categories = [
     { id: 'all', label: 'Toutes les Créations' },
-    { id: 'signature', label: 'Signature Satin' },
-    { id: 'sur-mesure', label: 'Sur-Mesure' },
-    { id: 'cadeaux', label: 'Coffrets Cadeaux' },
+    { id: 'signature', label: 'Signature & Éclat' },
+    { id: 'romantique', label: 'Bicolore & Romantique' },
     { id: 'peluches', label: 'Avec Peluches' },
-    { id: 'romantique', label: 'Romantique & Cérémonies' },
+    { id: 'cadeaux', label: 'Chocolats & Coffrets' },
   ];
 
   const filteredBouquets = selectedCategory === 'all'
@@ -34,7 +33,7 @@ export const BouquetsPage: React.FC = () => {
     : BOUQUETS_CATALOG.filter((b) => b.category === selectedCategory);
 
   const handleAddToCart = (bouquet: (typeof BOUQUETS_CATALOG)[0]) => {
-    const defaultSize = bouquet.sizes[0] || { roses: 20, price: bouquet.startingPrice };
+    const defaultSize = bouquet.sizes[0] || { roses: 12, price: bouquet.startingPrice };
     addToCart({
       bouquetId: bouquet.id,
       name: bouquet.name,
@@ -43,6 +42,7 @@ export const BouquetsPage: React.FC = () => {
       quantity: 1,
       rosesCount: defaultSize.roses,
       colorName: bouquet.availableColors[0]?.name || 'Nuance Classique',
+      selectedOptions: bouquet.availableOptions,
     });
   };
 
@@ -92,7 +92,12 @@ export const BouquetsPage: React.FC = () => {
               <div>
                 <div className="flex justify-between items-center text-xs tracking-widest text-brand-espresso/60 mb-3">
                   <span className="text-brand-caramel font-mono font-bold">{b.collectionCode}</span>
-                  <span className="font-semibold text-brand-espresso">Dès {formatPrice(b.startingPrice)}</span>
+                  <div className="text-right">
+                    <span className="font-semibold text-brand-espresso block">À partir de {formatPrice(b.startingPrice)}</span>
+                    {b.priceNote && (
+                      <span className="text-[10px] text-brand-espresso/60 block">{b.priceNote}</span>
+                    )}
+                  </div>
                 </div>
 
                 <div className="relative aspect-square overflow-hidden bg-brand-sand mb-5">
@@ -114,6 +119,11 @@ export const BouquetsPage: React.FC = () => {
                 <p className="text-xs text-brand-charcoal/70 mt-2 line-clamp-3 leading-relaxed">
                   {b.description}
                 </p>
+                {b.availableOptions && (
+                  <span className="text-[11px] text-brand-espresso/70 block mt-2 font-medium">
+                    <span className="font-semibold text-brand-espresso">Options :</span> {b.availableOptions.join(' • ')}
+                  </span>
+                )}
               </div>
 
               <div className="mt-6 pt-4 border-t border-brand-border flex flex-col gap-3">
