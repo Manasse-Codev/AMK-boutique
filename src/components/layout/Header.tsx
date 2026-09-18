@@ -95,7 +95,10 @@ export const Header: React.FC = () => {
 
           {/* Cart Drawer Trigger Button with Motion badge */}
           <motion.button
+            key={`cart-btn-${totalCount}`}
             whileTap={{ scale: 0.96 }}
+            animate={totalCount > 0 ? { scale: [1, 1.03, 1] } : undefined}
+            transition={{ type: 'spring', stiffness: 450, damping: 20 }}
             onClick={toggleCart}
             className="relative flex items-center gap-2.5 border border-brand-espresso/80 hover:border-brand-espresso bg-transparent hover:bg-brand-sand/50 text-brand-espresso text-xs uppercase tracking-[0.18em] px-4 py-2.5 transition duration-300"
             aria-label="Ouvrir le panier"
@@ -107,7 +110,7 @@ export const Header: React.FC = () => {
             <motion.span
               key={totalCount}
               initial={{ scale: 1 }}
-              animate={{ scale: [1, 1.32, 1] }}
+              animate={{ scale: [1, 1.35, 1] }}
               transition={{ type: 'spring', stiffness: 500, damping: 18 }}
               className="w-5 h-5 bg-brand-espresso text-brand-cream text-[10px] font-bold rounded-full flex items-center justify-center"
             >
