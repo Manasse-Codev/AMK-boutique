@@ -35,11 +35,11 @@ export const Header: React.FC = () => {
         
         {/* Brand Logo / Wordmark */}
         <Link to="/" className="flex items-center gap-3.5 group">
-          <div className="w-10 h-10 rounded-full border border-brand-caramel flex items-center justify-center bg-brand-caramel/10 group-hover:bg-brand-caramel transition-colors duration-300">
-            <span className="font-serif font-bold text-brand-caramel group-hover:text-white transition-colors text-lg">
-              A
-            </span>
-          </div>
+          <img
+            src="/assets/amk_logo.jpg"
+            alt="AMK Bouquets Logo"
+            className="w-11 h-11 rounded-full object-cover border border-brand-caramel/60 shadow-sm group-hover:scale-105 transition-transform duration-300"
+          />
           <div>
             <span className="font-display font-bold text-xl tracking-[0.18em] text-brand-espresso block leading-none">
               AMK

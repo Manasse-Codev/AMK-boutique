@@ -11,9 +11,11 @@ export const Footer: React.FC = () => {
           {/* Brand column */}
           <div className="md:col-span-4">
             <div className="flex items-center gap-3 mb-4">
-              <div className="w-8 h-8 rounded-full border border-brand-caramel flex items-center justify-center bg-brand-caramel/20">
-                <span className="font-serif font-bold text-xs text-brand-caramel">AMK</span>
-              </div>
+              <img
+                src="/assets/amk_logo.jpg"
+                alt="AMK Bouquets Logo"
+                className="w-9 h-9 rounded-full object-cover border border-brand-caramel/60 shadow-sm"
+              />
               <span className="font-display font-semibold text-lg tracking-[0.25em] text-white">
                 AMK BOUQUETS
               </span>
