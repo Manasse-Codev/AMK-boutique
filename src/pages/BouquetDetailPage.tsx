@@ -34,13 +34,17 @@ const BouquetDetailContent: React.FC<{ bouquet: Bouquet }> = ({ bouquet }) => {
   const unitPrice = selectedSize.price;
   const totalPrice = unitPrice * quantity;
 
+  const siteUrl = typeof window !== 'undefined' && window.location.origin && !window.location.origin.includes('localhost')
+    ? window.location.origin
+    : 'https://amk-boutique-qv1u.vercel.app';
+
   // Schema.org Product structured data for Google Shopping / Rich Snippets
   const productSchema = {
     '@context': 'https://schema.org',
     '@type': 'Product',
     name: bouquet.name,
     description: bouquet.detailedDescription || bouquet.description,
-    image: bouquet.image.startsWith('http') ? bouquet.image : `https://amk-bouquets.ci${bouquet.image}`,
+    image: bouquet.image.startsWith('http') ? bouquet.image : `${siteUrl}${bouquet.image}`,
     sku: bouquet.id,
     category: bouquet.category,
     brand: {
@@ -52,7 +56,7 @@ const BouquetDetailContent: React.FC<{ bouquet: Bouquet }> = ({ bouquet }) => {
       price: unitPrice,
       priceCurrency: 'XOF',
       availability: 'https://schema.org/InStock',
-      url: `https://amk-bouquets.ci/bouquets/${bouquet.slug}`,
+      url: `${siteUrl}/bouquets/${bouquet.slug}`,
       priceValidUntil: '2027-12-31',
       seller: {
         '@type': 'Organization',

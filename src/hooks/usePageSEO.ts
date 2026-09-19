@@ -9,18 +9,25 @@ export interface PageSEOProps {
   schemaData?: Record<string, unknown> | null;
 }
 
-const SITE_URL = 'https://amk-bouquets.ci';
-const DEFAULT_IMAGE = `${SITE_URL}/assets/rose_blush_champagne.png`;
+const getBaseUrl = (): string => {
+  if (typeof window !== 'undefined' && window.location.origin && !window.location.origin.includes('localhost')) {
+    return window.location.origin;
+  }
+  return 'https://amk-boutique-qv1u.vercel.app';
+};
 
 export function usePageSEO({
   title,
   description,
   canonicalPath = '',
-  ogImage = DEFAULT_IMAGE,
+  ogImage,
   noIndex = false,
   schemaData = null,
 }: PageSEOProps) {
   useEffect(() => {
+    const SITE_URL = getBaseUrl();
+    const finalOgImage = ogImage || `${SITE_URL}/assets/rose_blush_champagne.png`;
+
     // 1. Update Document Title
     document.title = title;
 
@@ -55,12 +62,12 @@ export function usePageSEO({
     setMetaTag('property', 'og:title', title);
     setMetaTag('property', 'og:description', description);
     setMetaTag('property', 'og:url', canonicalUrl);
-    setMetaTag('property', 'og:image', ogImage);
+    setMetaTag('property', 'og:image', finalOgImage);
 
     // 6. Twitter Card Meta Tags
     setMetaTag('name', 'twitter:title', title);
     setMetaTag('name', 'twitter:description', description);
-    setMetaTag('name', 'twitter:image', ogImage);
+    setMetaTag('name', 'twitter:image', finalOgImage);
 
     // 7. Dynamic JSON-LD Schema
     const scriptId = 'page-schema-jsonld';
